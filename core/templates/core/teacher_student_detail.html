@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{{ student.display_name }} · Quran Tracker{% endblock %}
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block content %}
+<div class="dashboard-shell dashboard-shell-wide">
+    {% url 'core:teacher_dashboard' as back_url %}
+    {% include "core/partials/dashboard_header.html" with role_label="Student history" page_title=student.display_name subtitle="Pick a day to view that submission" back_url=back_url %}
+
+    <section class="stat-row">
+        <article class="stat-card">
+            <p class="stat-label">Total logs</p>
+            <p class="stat-value">{{ total_logs }}</p>
+        </article>
+        <article class="stat-card">
+            <p class="stat-label">Logged today</p>
+            <p class="stat-value">
+                {% if logged_today %}
+                    <span class="status-pill status-pill-success">Yes</span>
+                {% else %}
+                    <span class="status-pill status-pill-missing">No</span>
+                {% endif %}
+            </p>
+        </article>
+        <article class="stat-card">
+            <p class="stat-label">Username</p>
+            <p class="stat-value stat-value-small">{{ student.username }}</p>
+        </article>
+    </section>
+
+    <main class="dashboard-panel">
+        {% if log_dates %}
+            <form method="get" class="day-picker-form">
+                <div class="field">
+                    <label for="date">Select day</label>
+                    <select name="date" id="date" class="form-control" onchange="this.form.submit()">
+                        {% for log_date in log_dates %}
+                            <option value="{{ log_date|date:'Y-m-d' }}" {% if log_date == selected_date %}selected{% endif %}>
+                                {{ log_date|date:"l, M j, Y" }}{% if log_date == today %} (Today){% endif %}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+
+            {% if selected_log %}
+                <article class="history-item history-item-today {% if selected_log.date == today %}history-item-highlight{% endif %}">
+                    <div class="history-date">
+                        <strong>{{ selected_log.date|date:"l, M j, Y" }}</strong>
+                        {% if selected_log.date == today %}
+                            <span class="status-pill status-pill-success">Today</span>
+                        {% endif %}
+                    </div>
+                    <dl class="history-details">
+                        <div>
+                            <dt>Reading type</dt>
+                            <dd>{{ selected_log.get_reading_type_display }}</dd>
+                        </div>
+                        <div>
+                            <dt>Minutes</dt>
+                            <dd>{{ selected_log.minutes_read }}</dd>
+                        </div>
+                        <div>
+                            <dt>Amount</dt>
+                            <dd>{{ selected_log.amount_display }}</dd>
+                        </div>
+                    </dl>
+                    {% if selected_log.notes %}
+                        <p class="history-notes">{{ selected_log.notes }}</p>
+                    {% endif %}
+                </article>
+            {% endif %}
+        {% else %}
+            <div class="empty-state">
+                <h2>No logs yet</h2>
+                <p>{{ student.display_name }} hasn’t submitted any daily reading logs.</p>
+            </div>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

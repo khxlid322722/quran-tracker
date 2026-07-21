@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Dashboard · Quran Tracker{% endblock %}
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block content %}
+<div class="dashboard-shell dashboard-shell-wide">
+    {% include "core/partials/dashboard_header.html" with role_label="Teacher" page_title=page_title subtitle=subtitle %}
+
+    <section class="stat-row">
+        <article class="stat-card">
+            <p class="stat-label">Students</p>
+            <p class="stat-value">{{ student_count }}</p>
+        </article>
+        <article class="stat-card">
+            <p class="stat-label">Logged today</p>
+            <p class="stat-value">{{ logged_count }} / {{ student_count }}</p>
+        </article>
+        <article class="stat-card">
+            <p class="stat-label">Date</p>
+            <p class="stat-value">{{ today|date:"M j, Y" }}</p>
+        </article>
+    </section>
+
+    <main class="dashboard-panel">
+        {% if student_rows %}
+            <div class="section-heading">
+                <h2>Your class</h2>
+                <p class="subtitle">Click a student to view their reading history by day.</p>
+            </div>
+
+            <div class="table-wrap">
+                <table class="student-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Student</th>
+                            <th scope="col">Today</th>
+                            <th scope="col">Reading type</th>
+                            <th scope="col">Minutes</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in student_rows %}
+                            <tr class="student-row">
+                                <td>
+                                    <a class="student-link" href="{% url 'core:teacher_student_detail' row.student.id %}">
+                                        {{ row.student.display_name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if row.log %}
+                                        <span class="status-pill status-pill-success">
+                                            <span aria-hidden="true">✓</span> Yes
+                                        </span>
+                                    {% else %}
+                                        <span class="status-pill status-pill-missing">
+                                            <span aria-hidden="true">✕</span> No
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if row.log %}
+                                        {{ row.log.get_reading_type_display }}
+                                    {% else %}
+                                        <span class="muted-dash">—</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if row.log %}
+                                        {{ row.log.minutes_read }}
+                                    {% else %}
+                                        <span class="muted-dash">—</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if row.log %}
+                                        {{ row.log.amount_display }}
+                                    {% else %}
+                                        <span class="muted-dash">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="table-action">
+                                    <a class="text-link" href="{% url 'core:teacher_student_detail' row.student.id %}">
+                                        View history →
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h2>No students yet</h2>
+                <p>Student accounts will appear here once they join your class.</p>
+            </div>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

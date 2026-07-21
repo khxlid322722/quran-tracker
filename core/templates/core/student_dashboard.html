@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard · Quran Tracker{% endblock %}
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block content %}
+<div class="dashboard-shell">
+    {% include "core/partials/dashboard_header.html" with role_label="Student" page_title=page_title subtitle=subtitle %}
+
+    <section class="stat-row">
+        <article class="stat-card">
+            <p class="stat-label">Today</p>
+            <p class="stat-value">{{ today|date:"M j, Y" }}</p>
+        </article>
+        <article class="stat-card">
+            <p class="stat-label">Status</p>
+            <p class="stat-value">
+                {% if today_log %}
+                    <span class="status-pill status-pill-success">Logged</span>
+                {% else %}
+                    <span class="status-pill status-pill-pending">Not yet</span>
+                {% endif %}
+            </p>
+        </article>
+    </section>
+
+    <main class="dashboard-panel log-card">
+        <div class="log-card-header">
+            <h2>Did you complete your Quran today?</h2>
+            <p class="subtitle">
+                {% if today_log %}
+                    You can update today’s entry anytime before midnight.
+                {% else %}
+                    It’s a new day — submit one log for {{ today|date:"F j, Y" }}.
+                {% endif %}
+            </p>
+        </div>
+
+        {% if today_log %}
+            <div class="status-banner status-success">
+                <span class="status-icon" aria-hidden="true">✓</span>
+                <div>
+                    <strong>Today’s reading is logged.</strong>
+                    <p>Review your submission below or edit it if something changed.</p>
+                </div>
+            </div>
+
+            <section class="log-summary" aria-label="Today's submission">
+                <h3>Today’s submission</h3>
+                <dl class="summary-grid">
+                    <div>
+                        <dt>Reading type</dt>
+                        <dd>{{ today_log.get_reading_type_display }}</dd>
+                    </div>
+                    <div>
+                        <dt>Minutes read</dt>
+                        <dd>{{ today_log.minutes_read }}</dd>
+                    </div>
+                    <div>
+                        <dt>Amount read</dt>
+                        <dd>{{ today_log.amount_display }}</dd>
+                    </div>
+                    {% if today_log.notes %}
+                        <div class="summary-full">
+                            <dt>Notes</dt>
+                            <dd>{{ today_log.notes }}</dd>
+                        </div>
+                    {% endif %}
+                </dl>
+            </section>
+        {% endif %}
+
+        <section class="log-form-section">
+            <h3>{% if today_log %}Edit today’s log{% else %}Submit today’s log{% endif %}</h3>
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" class="log-form">
+                {% csrf_token %}
+                {% include "core/partials/daily_log_form_fields.html" %}
+                <button type="submit" class="btn btn-primary">
+                    {% if today_log %}Save changes{% else %}Submit log{% endif %}
+                </button>
+            </form>
+        </section>
+    </main>
+
+    {% if recent_logs %}
+        <section class="dashboard-panel history-panel">
+            <div class="section-heading">
+                <h2>Previous days</h2>
+                <p class="subtitle">Each day gets its own log. Come back tomorrow to submit again.</p>
+            </div>
+            <div class="history-list">
+                {% for log in recent_logs %}
+                    <article class="history-item">
+                        <div class="history-date">
+                            <strong>{{ log.date|date:"M j, Y" }}</strong>
+                            <span>{{ log.get_reading_type_display }}</span>
+                        </div>
+                        <div class="history-meta">
+                            <span>{{ log.minutes_read }} min</span>
+                            <span>{{ log.amount_display }}</span>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

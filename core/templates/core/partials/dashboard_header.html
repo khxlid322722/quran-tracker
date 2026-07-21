@@ -1,0 +1,16 @@
+<header class="dashboard-header">
+    <div class="dashboard-header-main">
+        {% if back_url %}
+            <a href="{{ back_url }}" class="back-link">← Back</a>
+        {% endif %}
+        <p class="eyebrow">{{ role_label }}</p>
+        <h1>{{ page_title }}</h1>
+        {% if subtitle %}
+            <p class="subtitle">{{ subtitle }}</p>
+        {% endif %}
+    </div>
+    <form method="post" action="{% url 'core:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary">Sign out</button>
+    </form>
+</header>

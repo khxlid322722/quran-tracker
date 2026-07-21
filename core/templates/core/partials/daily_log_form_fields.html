@@ -1,0 +1,41 @@
+<div class="form-grid">
+    <div class="field">
+        <label for="{{ form.reading_type.id_for_label }}">Reading type</label>
+        {{ form.reading_type }}
+        {% if form.reading_type.errors %}
+            <p class="field-error">{{ form.reading_type.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <div class="field">
+        <label for="{{ form.minutes_read.id_for_label }}">Minutes read</label>
+        {{ form.minutes_read }}
+        {% if form.minutes_read.errors %}
+            <p class="field-error">{{ form.minutes_read.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <div class="field">
+        <label for="{{ form.amount_read.id_for_label }}">Amount read</label>
+        {{ form.amount_read }}
+        {% if form.amount_read.errors %}
+            <p class="field-error">{{ form.amount_read.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <div class="field">
+        <label for="{{ form.unit.id_for_label }}">Unit</label>
+        {{ form.unit }}
+        {% if form.unit.errors %}
+            <p class="field-error">{{ form.unit.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <div class="field field-full">
+        <label for="{{ form.notes.id_for_label }}">Notes <span class="optional">(optional)</span></label>
+        {{ form.notes }}
+        {% if form.notes.errors %}
+            <p class="field-error">{{ form.notes.errors.0 }}</p>
+        {% endif %}
+    </div>
+</div>

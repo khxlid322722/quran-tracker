@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#0f766e" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b5f59" media="(prefers-color-scheme: dark)">
+    <meta name="description" content="Quran Tracker — log daily reading and track your class progress.">
+    <title>{% block title %}Quran Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message message-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

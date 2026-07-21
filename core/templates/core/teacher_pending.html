@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Approval pending · Quran Tracker{% endblock %}
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block content %}
+<div class="dashboard-shell">
+    <header class="dashboard-header">
+        <div>
+            <p class="eyebrow">Teacher</p>
+            <h1>Approval pending</h1>
+            <p class="subtitle">Signed in as {{ user.display_name }}</p>
+        </div>
+        <form method="post" action="{% url 'core:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Sign out</button>
+        </form>
+    </header>
+
+    <main class="dashboard-panel">
+        <div class="status-banner status-success">
+            <span class="status-icon" aria-hidden="true">⏳</span>
+            <div>
+                <strong>Your teacher account is waiting for admin approval.</strong>
+                <p>
+                    An admin must approve your account before you can access the
+                    teacher dashboard. Please check back later.
+                </p>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

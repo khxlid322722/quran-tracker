@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Create account · Quran Tracker{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<div class="auth-shell auth-shell-wide">
+    <div class="auth-card">
+        <div class="auth-brand">
+            <p class="eyebrow">Quran Tracker</p>
+            <h1>Create your account</h1>
+            <p class="subtitle">Sign up as a student and join your class.</p>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            <div class="field">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <p class="field-error">{{ form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-grid">
+                <div class="field">
+                    <label for="{{ form.first_name.id_for_label }}">First name <span class="optional">(optional)</span></label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <p class="field-error">{{ form.first_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label for="{{ form.last_name.id_for_label }}">Last name <span class="optional">(optional)</span></label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <p class="field-error">{{ form.last_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="{{ form.password1.id_for_label }}">Password</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <p class="field-error">{{ form.password1.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.password2.id_for_label }}">Confirm password</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <p class="field-error">{{ form.password2.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create student account</button>
+        </form>
+
+        <p class="auth-footer">
+            Teacher accounts are created by the admin.
+            Already have an account?
+            <a href="{% url 'core:login' %}">Sign in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
