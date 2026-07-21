@@ -40,6 +40,9 @@ class Command(BaseCommand):
         admin.is_staff = True
         admin.is_superuser = True
         admin.is_active = True
+        admin.role = User.Role.TEACHER
+        admin.teacher_approved = False
+        admin.teacher = None
         admin.save()
         action = 'Created' if created else 'Updated'
         self.stdout.write(self.style.SUCCESS(f'{action} admin user "{admin_username}".'))
