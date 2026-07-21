@@ -31,9 +31,16 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+render_external_url = os.environ.get('RENDER_EXTERNAL_URL')
 if render_hostname:
     ALLOWED_HOSTS.append(render_hostname)
     CSRF_TRUSTED_ORIGINS.append(f'https://{render_hostname}')
+if render_external_url:
+    CSRF_TRUSTED_ORIGINS.append(render_external_url.rstrip('/'))
+
+# De-duplicate while preserving order
+ALLOWED_HOSTS = list(dict.fromkeys(ALLOWED_HOSTS))
+CSRF_TRUSTED_ORIGINS = list(dict.fromkeys(CSRF_TRUSTED_ORIGINS))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -126,11 +133,14 @@ LOGOUT_REDIRECT_URL = 'core:login'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    SECURE_SSL_REDIRECT = False

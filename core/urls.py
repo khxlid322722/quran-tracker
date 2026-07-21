@@ -6,6 +6,7 @@ app_name = 'core'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('manifest.webmanifest', views.manifest, name='manifest'),
     path('login/', views.RoleLoginView.as_view(), name='login'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
     path(

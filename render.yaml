@@ -4,7 +4,7 @@ services:
     runtime: python
     plan: free
     buildCommand: ./build.sh
-    startCommand: gunicorn quran_tracker.wsgi:application
+    startCommand: gunicorn quran_tracker.wsgi:application --timeout 120 --workers 2 --preload
     envVars:
       - key: DJANGO_DEBUG
         value: "False"

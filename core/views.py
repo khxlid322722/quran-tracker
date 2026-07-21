@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import FileResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -11,6 +14,13 @@ from django.views.generic import DetailView, FormView, TemplateView
 from .forms import DailyLogForm, SignUpForm
 from .mixins import StudentRequiredMixin, TeacherRequiredMixin
 from .models import DailyLog, User
+
+
+def manifest(request):
+    manifest_path = (
+        Path(__file__).resolve().parent / 'static' / 'core' / 'manifest.webmanifest'
+    )
+    return FileResponse(manifest_path.open('rb'), content_type='application/manifest+json')
 
 
 class RoleLoginView(LoginView):

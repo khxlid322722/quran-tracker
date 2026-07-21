@@ -1,0 +1,19 @@
+{
+  "name": "Quran Tracker",
+  "short_name": "Quran",
+  "description": "Log daily Quran reading and track class progress.",
+  "start_url": "/login/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6faf8",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "/static/core/img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
