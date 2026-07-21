@@ -6,11 +6,11 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f766e",
-  "theme_color": "#0f766e",
+  "background_color": "#1f4d35",
+  "theme_color": "#1f4d35",
   "icons": [
     {
-      "src": "/static/core/img/apple-touch-icon.png",
+      "src": "/static/core/img/app-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

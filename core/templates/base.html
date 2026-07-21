@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#0f766e" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0b5f59" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f4d35">
     <meta name="description" content="Quran Tracker — log daily reading and track your class progress.">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,8 +13,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>{% block title %}Quran Tracker{% endblock %}</title>
     <link rel="manifest" href="{% url 'core:manifest' %}">
-    <link rel="icon" href="{% static 'core/img/apple-touch-icon.png' %}" type="image/png">
-    <link rel="apple-touch-icon" href="{% static 'core/img/apple-touch-icon.png' %}">
+    <link rel="icon" href="{% static 'core/img/app-icon.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'core/img/app-icon.png' %}">
     <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
 </head>
 <body class="{% block body_class %}{% endblock %}">

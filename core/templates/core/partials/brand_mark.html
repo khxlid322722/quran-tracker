@@ -1,12 +1,9 @@
 {% load static %}
 <div class="brand-mark{% if compact %} brand-mark-compact{% endif %}">
-    <img src="{% static 'core/img/logo-mark.svg' %}" alt="" class="brand-mark-icon" width="{% if compact %}44{% else %}56{% endif %}" height="{% if compact %}44{% else %}56{% endif %}">
-    {% if not compact %}
+    <img src="{% static 'core/img/app-icon.png' %}" alt="Quran Tracker" class="brand-mark-icon" width="{% if compact %}44{% else %}64{% endif %}" height="{% if compact %}44{% else %}64{% endif %}">
+    {% if not compact and show_title %}
         <div class="brand-mark-text">
             <p class="brand-mark-title">Quran Tracker</p>
-            {% if brand_subtitle %}
-                <p class="brand-mark-subtitle">{{ brand_subtitle }}</p>
-            {% endif %}
         </div>
     {% endif %}
 </div>
