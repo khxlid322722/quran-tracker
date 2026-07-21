@@ -49,6 +49,8 @@ class User(AbstractUser):
         ).first()
 
     def get_dashboard_url_name(self):
+        if self.is_superuser:
+            return 'admin:index'
         if self.is_student:
             return 'core:student_dashboard'
         if self.is_approved_teacher:
