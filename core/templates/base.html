@@ -11,11 +11,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Quran Tracker">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>{% block title %}Quran Tracker{% endblock %}</title>
-    <link rel="manifest" href="{% url 'core:manifest' %}">
-    <link rel="icon" href="{% static 'core/img/app-icon.png' %}" type="image/png">
-    <link rel="apple-touch-icon" href="{% static 'core/img/app-icon.png' %}">
-    <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
+    <link rel="manifest" href="{% url 'core:manifest' %}?v={{ STATIC_VERSION }}">
+    <link rel="icon" href="{% static 'core/img/app-icon.png' %}?v={{ STATIC_VERSION }}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'core/img/app-icon.png' %}?v={{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'core/css/main.css' %}?v={{ STATIC_VERSION }}">
 </head>
 <body class="{% block body_class %}{% endblock %}">
     {% if messages %}
