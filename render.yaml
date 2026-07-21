@@ -16,6 +16,14 @@ services:
         fromDatabase:
           name: quran-tracker-db
           property: connectionString
+      - key: BOOTSTRAP_ADMIN_USERNAME
+        value: khalid1
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        sync: false
+      - key: BOOTSTRAP_TEACHER_USERNAME
+        value: teacher
+      - key: BOOTSTRAP_TEACHER_PASSWORD
+        sync: false
     autoDeploy: true
 
 databases:
